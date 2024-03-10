@@ -151,6 +151,8 @@ export class FormatConverter {
 		let display_code_matches: string[]
 		const add_highlight_css: boolean = note_text.match(c.OBS_DISPLAY_CODE_REGEXP) ? true : false;
 		[note_text, math_matches] = this.censor(note_text, ANKI_MATH_REGEXP, MATH_REPLACE);
+		// address math blocks inside callouts
+		math_matches = math_matches.map(s => s.replace(/\n>/g, '\n '));
 		[note_text, display_code_matches] = this.censor(note_text, c.OBS_DISPLAY_CODE_REGEXP, DISPLAY_CODE_REPLACE);
 		[note_text, inline_code_matches] = this.censor(note_text, c.OBS_CODE_REGEXP, INLINE_CODE_REPLACE);
 		if (cloze) {
